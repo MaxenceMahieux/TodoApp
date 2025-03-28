@@ -1,20 +1,27 @@
 import { Colors } from "@/constants/Colors";
 import { Category } from "@/constants/Types";
-import { Dimensions, FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, Image, StyleSheet, Text, View, Pressable } from "react-native";
+import { router } from 'expo-router';
 
 interface Props {
   categories: Category[],
 }
 
 function CategoryItem({ title, color, icon }: Category) {
+  const handlePress = () => {
+    router.push(`/category/${title.toLowerCase()}`);
+  };
+
   return (
-    <View style={[styles.categoryContainer, { backgroundColor: color }]}>
-      <Image source={icon} />
-      <View style={styles.textContainer}>
-        <Text style={styles.categoryCount}>0</Text>
-        <Text style={styles.categoryTitle}>{title}</Text>
+    <Pressable onPress={handlePress}>
+      <View style={[styles.categoryContainer, { backgroundColor: color }]}>
+        <Image source={icon} />
+        <View style={styles.textContainer}>
+          <Text style={styles.categoryCount}>0</Text>
+          <Text style={styles.categoryTitle}>{title}</Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
