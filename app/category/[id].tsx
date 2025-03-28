@@ -6,7 +6,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import ScreenMainTitle from '@/components/ScreenMainTitle';
 import { useState } from 'react';
 import { Task } from '@/constants/Types';
-import { useTasks } from '@/hooks/useTasks';
+import { useTasks } from '@/contexts/TasksContext';
 
 export default function CategoryScreen() {
   const { id } = useLocalSearchParams();

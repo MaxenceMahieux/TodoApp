@@ -1,10 +1,19 @@
-import { useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Task } from '@/constants/Types';
 
+interface TasksContextType {
+  tasks: Task[];
+  addTask: (task: Task) => Promise<void>;
+  toggleTask: (taskId: string) => Promise<void>;
+  deleteTask: (taskId: string) => Promise<void>;
+}
+
+const TasksContext = createContext<TasksContextType | undefined>(undefined);
+
 const STORAGE_KEY = '@tasks';
 
-export function useTasks() {
+export function TasksProvider({ children }: { children: React.ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -48,10 +57,17 @@ export function useTasks() {
     await saveTasks(updatedTasks);
   };
 
-  return {
-    tasks,
-    addTask,
-    toggleTask,
-    deleteTask,
-  };
+  return (
+    <TasksContext.Provider value={{ tasks, addTask, toggleTask, deleteTask }}>
+      {children}
+    </TasksContext.Provider>
+  );
+}
+
+export function useTasks() {
+  const context = useContext(TasksContext);
+  if (context === undefined) {
+    throw new Error('useTasks must be used within a TasksProvider');
+  }
+  return context;
 } 

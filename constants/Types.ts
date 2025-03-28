@@ -1,10 +1,9 @@
 import { ImageSourcePropType } from 'react-native';
-import { SvgProps } from 'react-native-svg';
 
 export type Category = {
   title: string;
   color: string;
-  icon: React.FC<SvgProps>;
+  icon: ImageSourcePropType;
 }
 
 export type Task = {
