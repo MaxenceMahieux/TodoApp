@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 interface Props {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 export default function ScreenMainTitle({ title, subtitle }: Props) {
